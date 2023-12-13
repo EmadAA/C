@@ -1,0 +1,110 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int node,edge;
+int graph[101][101];
+int Visit[1001];
+
+vector<int>Graph[101];
+
+
+void bfs(int start)
+{
+
+    queue<int> q;
+    cout<<start<<" ";
+    Visit[start]=1;
+    q.push(start);
+    while (!q.empty())
+    {
+        int a=q.front();
+        q.pop();
+        for (int i = 1; i <= node; i++)
+        {
+            if(Visit[i]==0 && graph[a][i]!=0)
+            {
+                cout<<i<<" ";
+                q.push(i);
+                Visit[i]=1;
+            }
+        }
+
+    }
+
+
+}
+
+
+
+void dfs(int start)  // DFS function declaration
+{
+    Visit[start] = 1;  // Mark the starting node as visited
+    cout << start << " ";  // Print the starting node
+    stack<int> Sta;  // Use stack for DFS
+    Sta.push(start);  // Push the starting node onto the stack
+
+    while (!Sta.empty())  // While the stack is not empty
+    {
+        int x = Sta.top();  // Get the top element of the stack
+        Sta.pop();  // Remove the top element from the stack
+
+        for (int j = 0; j < Graph[x].size(); j++)  // Iterate through neighbors
+        {
+            int node = Graph[x][j];  // Get the neighbor of the current node
+
+            if (Visit[node] == 0)  // If the neighbor has not been visited
+            {
+                Visit[node] = 1;  // Mark the neighbor as visited
+                cout << node << " ";  // Print the neighbor
+                Sta.push(node);  // Add the neighbor to the stack for further exploration
+            }
+        }
+    }
+}
+
+
+
+
+
+int main()
+{
+
+
+    int u,v,startNode;
+
+    cout<<endl<<"Input Nodes and Edges  number" ;
+    cout<<"Now input the graph value"<<endl ;
+
+    cin>>node>>edge;
+
+    for (int i = 1; i <= edge; i++)
+    {
+        cin>>u>>v;
+        graph[u][v]=1;
+        graph[v][u]=1;
+        Graph[u].push_back(v);  // Add edge from u to v
+        Graph[v].push_back(u);  // Add edge from v to u (undirected graph)
+
+    }
+
+
+
+    char input;
+    cout<<"Now, B for BFS  and  D for DFS"<<endl;
+    cin>>input;
+    cout<<"Enter The Starting Node :"<<endl;
+
+    cin>>startNode;
+    if(input=='B')
+    {
+
+        bfs(startNode);
+    }
+    if(input=='D')
+    {
+
+        dfs(startNode);
+    }
+    return 0;
+}
